@@ -22,9 +22,8 @@ class DataIngestion():
                              auto_adjust=False)
             os.makedirs(os.path.dirname(self.config.raw_data_path), exist_ok=True)
             df.to_csv(self.config.raw_data_path, index=False, header=True)
-            
+            logging.info("Finished data ingestion.")
 
-
-
+            return self.config.raw_data_path
         except Exception as e:
             raise CustomException(e, sys)

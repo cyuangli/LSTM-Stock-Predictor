@@ -3,12 +3,17 @@ data_ingestion:
   start_date: 2020-01-01
   end_date: 2024-12-31
   raw_data_path: artifacts/data_ingestion/data.csv
-  train_data_path: artifacts/data_ingestion/train.csv
-  test_data_path: artifacts/data_ingestion/test.csv
-  train_test_ratio: 0.9
 
 data_transformation:
+  features:
+    - ema
+    - gkvol
+    - vpt
+  train_test_split: 0.9
+  lookback: 24
+  horizon: 1
   preprocessor_path: artifacts/data_transformation/preprocessor.pkl
+
 
 model_trainer:
   
