@@ -1,0 +1,13 @@
+ipykernel
+numpy<=2.2
+pandas-ta-classic
+pandas
+scipy
+matplotlib
+tensorflow
+seaborn
+tqdm
+yfinance
+scikit-learn
+PyYAML
+-e .
