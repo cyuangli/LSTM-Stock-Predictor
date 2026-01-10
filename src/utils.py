@@ -29,20 +29,18 @@ def load_pkl(file_path):
 def save_keras(file_path, model):
     try:
         dir_path = os.path.dirname(file_path)
-
         os.makedirs(dir_path, exist_ok=True)
 
-        with open(file_path, "w") as file_obj:
-            model.save(file_obj)
+        model.save(file_path)
 
     except Exception as e:
-        raise CustomException(e, sys)    
+        raise CustomException(e, sys) 
 
 def load_keras(file_path):
     try:
-        keras.model.load_model(file_path)
+        return keras.models.load_model(file_path)
     except Exception as e:
-        raise CustomException(sys, e)
+        raise CustomException(e, sys)
 
 def save_json(file_path, obj):
     try:

@@ -1,5 +1,5 @@
 data_ingestion:
-  ticker: AAPL
+  ticker: MSFT
   start_date: 2020-01-01
   end_date: 2024-12-31
   raw_data_path: artifacts/data_ingestion/data.csv
@@ -7,8 +7,15 @@ data_ingestion:
 data_transformation:
   features:
     - ema
-    - gkvol
-    - vpt
+    - sma
+    - rsi
+    - macd
+    - atr
+    - bollinger
+    - obv
+    - vwap
+    - price_position
+    - lagged_returns
   train_test_split: 0.9
   lookback: 24
   horizon: 1
