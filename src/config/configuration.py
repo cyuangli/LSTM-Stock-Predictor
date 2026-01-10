@@ -15,7 +15,14 @@ class DataTransformationConfig:
     lookback: int
     horizon: int
     include_ohlc: bool
-    preprocessor_path: str
+    X_preprocessor_path: str
+    y_preprocessor_path: str
+@dataclass
+class ModelTrainingConfig:
+    epochs: int
+    batch_size: int
+    model_save_path: str
+    evaluations_save_path: str
 
 class ConfigurationManager():
     def __init__(self, config_path="config.yaml"):
@@ -37,5 +44,14 @@ class ConfigurationManager():
             lookback=self.config["data_transformation"]["lookback"],
             horizon=self.config["data_transformation"]["horizon"],
             include_ochl=self.config["data_transformation"]["include_ohlc"],
-            preprocessor_path=self.config["data_transformation"]["preprocessor_path"]
+            X_preprocessor_path=self.config["data_transformation"]["X_preprocessor_path"],
+            y_preprocessor_path=self.config["data_transformation"]["y_preprocessor_path"]
+        )
+    
+    def get_model_training(self) -> ModelTrainingConfig:
+        return ModelTrainingConfig(
+            epochs=self.config["model_training"]["epochs"],
+            batch_size=self.config["model_training"]["batch_size"],
+            model_save_path=self.config["model_training"]["model_save_path"],
+            evaluations_save_path=self.config["model_training"]["evaluations_save_path"]
         )

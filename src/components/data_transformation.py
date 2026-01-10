@@ -76,11 +76,11 @@ class DataTransformation():
 
 
             logging.info("Saving preprocessors.")
-            save_pkl(X_scaler, self.config.preprocessor_path + "/preprocessor_x.pkl")
-            save_pkl(y_scaler, self.config.preprocessor_path + "/preprocessor_y.pkl")
+            save_pkl(X_scaler, self.config.X_preprocessor_path)
+            save_pkl(y_scaler, self.config.y_preprocessor_path)
 
             logging.info("Finished data transformation.")
 
-            return X_train, y_train, X_test, y_test, self.config.preprocessor_path
+            return X_train, y_train, X_test, y_test, self.config.X_preprocessor_path, self.config.y_preprocessor_path
         except Exception as e:
             raise CustomException(e, sys)

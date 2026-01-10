@@ -202,7 +202,7 @@ FEATURE_REGISTRY = {
     "lagged_returns": get_lagged_returns,
 }
 
-def build_features(data: pd.DataFrame, feature_names: list[str], include_ochl: bool) -> pd.DataFrame:
+def build_features(data: pd.DataFrame, feature_names: list[str], include_ohlc: bool) -> pd.DataFrame:
     feature_dfs = []
 
     for name in feature_names:
@@ -221,7 +221,7 @@ def build_features(data: pd.DataFrame, feature_names: list[str], include_ochl: b
     # Combine all features with original data
     features = pd.concat(feature_dfs, axis=1)
 
-    if include_ochl:
+    if include_ohlc:
         return pd.concat([data, features], axis=1)
     else:
         return pd.concat([data["Returns"], features], axis=1)

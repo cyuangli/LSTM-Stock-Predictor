@@ -12,9 +12,13 @@ data_transformation:
   train_test_split: 0.9
   lookback: 24
   horizon: 1
-  preprocessor_path: artifacts/data_transformation
   include_ohlc: true
+  X_preprocessor_path: artifacts/data_transformation/x_preprocessor_path.pkl
+  y_preprocessor_path: artifacts/data_transformation/y_preprocessor_path.pkl
 
-
-model_trainer:
+model_training:
+  epochs: 20
+  batch_size: 32
+  model_save_path: artifacts/model_training/lstm.keras
+  evaluations_save_path: artifacts/model_training/evaluations.json
   
