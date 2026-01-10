@@ -14,6 +14,7 @@ class DataTransformationConfig:
     train_test_split: float
     lookback: int
     horizon: int
+    include_ohlc: bool
     preprocessor_path: str
 
 class ConfigurationManager():
@@ -35,6 +36,6 @@ class ConfigurationManager():
             train_test_split=self.config["data_transformation"]["train_test_split"],
             lookback=self.config["data_transformation"]["lookback"],
             horizon=self.config["data_transformation"]["horizon"],
+            include_ochl=self.config["data_transformation"]["include_ohlc"],
             preprocessor_path=self.config["data_transformation"]["preprocessor_path"]
-
         )

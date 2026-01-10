@@ -12,7 +12,8 @@ data_transformation:
   train_test_split: 0.9
   lookback: 24
   horizon: 1
-  preprocessor_path: artifacts/data_transformation/preprocessor.pkl
+  preprocessor_path: artifacts/data_transformation
+  include_ohlc: true
 
 
 model_trainer:
