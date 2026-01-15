@@ -205,6 +205,8 @@ FEATURE_REGISTRY = {
 def build_features(data: pd.DataFrame, feature_names: list[str], include_ohlc: bool) -> pd.DataFrame:
     feature_dfs = []
 
+    if not feature_names:
+        return data
     for name in feature_names:
         if name not in FEATURE_REGISTRY:
             raise ValueError(f"Unknown feature: {name}")

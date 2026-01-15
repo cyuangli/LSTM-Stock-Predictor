@@ -1,5 +1,5 @@
 data_ingestion:
-  ticker: MSFT
+  ticker: JPM
   start_date: 2020-01-01
   end_date: 2024-12-31
   raw_data_path: artifacts/data_ingestion/data.csv

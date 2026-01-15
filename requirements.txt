@@ -3,6 +3,7 @@ numpy<=2.2
 pandas-ta-classic
 pandas
 scipy
+streamlit
 matplotlib
 tensorflow
 seaborn

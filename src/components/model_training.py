@@ -54,6 +54,13 @@ class ModelTrainer:
             model = self.build_model(input_shape=(X_train.shape[1], X_train.shape[2]))
 
             logging.info("Training model.")
+            print("X_train shape:", X_train.shape)
+            print("y_train shape:", y_train.shape)
+            print("Total samples:", X_train.shape[0])
+            print("y_train std:", np.std(y_train))
+            print("Any NaNs in X_train:", np.isnan(X_train).any())
+            print("Any NaNs in y_train:", np.isnan(y_train).any())
+            print("X_train min/max:", X_train.min(), X_train.max())
             model.fit(
                 X_train, y_train,
                 epochs=self.config.epochs,
