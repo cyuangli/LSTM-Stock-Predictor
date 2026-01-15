@@ -26,7 +26,6 @@ def get_rsis(data, periods=24):
     rsis = pd.DataFrame()
     
     for p in rsi_range:
-        # Calculate RSI manually
         delta = data["Close"].diff()
         gain = (delta.where(delta > 0, 0)).rolling(window=p).mean()
         loss = (-delta.where(delta < 0, 0)).rolling(window=p).mean()
@@ -118,7 +117,7 @@ def get_vpt(data):
         change = (data["Adj Close"].iloc[i] - data["Adj Close"].iloc[i-1]) / data["Adj Close"].iloc[i-1]
         vpt.append(vpt[-1] + data["Volume"].iloc[i] * change)
     vpt = pd.Series(vpt, index=data.index)
-    new_df["VPT"] = (vpt - vpt.mean()) / vpt.std()  # Fixed: removed double assignment
+    new_df["VPT"] = (vpt - vpt.mean()) / vpt.std()
     return new_df
     
 def get_obv(data):
@@ -220,7 +219,6 @@ def build_features(data: pd.DataFrame, feature_names: list[str], include_ohlc: b
 
         feature_dfs.append(feature_df)
 
-    # Combine all features with original data
     features = pd.concat(feature_dfs, axis=1)
 
     if include_ohlc:

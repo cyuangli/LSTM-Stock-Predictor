@@ -15,10 +15,8 @@ class DataTransformation:
         self.config = config_manager.get_data_transformation()
 
     def get_data_transformation(self, df: pd.DataFrame):
-        # Compute log returns
         df["Returns"] = np.log(df["Close"]).diff()
 
-        # Add features
         df = build_features(
             data=df,
             feature_names=self.config.features,
@@ -29,18 +27,16 @@ class DataTransformation:
 
         y = df["Returns"].values.reshape(-1, 1)
         X = df.drop(columns=["Returns"]).values
-        prices = df["Close"].values  # Keep prices for financial metrics
+        prices = df["Close"].values
 
         training_len = int(len(df) * self.config.train_test_split)
 
-        # Split raw arrays
         X_train_raw = X[:training_len]
         y_train_raw = y[:training_len]
         X_test_raw = X[training_len - self.config.lookback:]
         y_test_raw = y[training_len - self.config.lookback:]
         test_prices_raw = prices[training_len - self.config.lookback:]
 
-        # Scale
         X_scaler = StandardScaler()
         y_scaler = StandardScaler()
 
@@ -50,7 +46,6 @@ class DataTransformation:
         y_train_scaled = y_scaler.fit_transform(y_train_raw)
         y_test_scaled = y_scaler.transform(y_test_raw)
 
-        # Create sequences
         X_train, y_train = [], []
         for i in range(self.config.lookback, len(X_train_scaled) - self.config.horizon + 1):
             X_train.append(X_train_scaled[i - self.config.lookback:i, :])
@@ -66,7 +61,6 @@ class DataTransformation:
         X_test = np.array(X_test)
         y_test = np.array(y_test)
 
-        # Align test prices to predictions
         test_prices_aligned = test_prices_raw[self.config.lookback - 1 + self.config.horizon - 1:]
         test_prices_aligned = test_prices_aligned[:len(y_test)]
 
@@ -76,7 +70,7 @@ class DataTransformation:
         logging.info("Initiating data transformation.")
         try:
             df = pd.read_csv(raw_array_path, parse_dates=["Date"])
-            df = df.sort_values("Date")  # important for VWAP
+            df = df.sort_values("Date")
             df.set_index("Date", inplace=True)
             X_train, y_train, X_test, y_test, X_scaler, y_scaler, test_prices_aligned = self.get_data_transformation(df)
 

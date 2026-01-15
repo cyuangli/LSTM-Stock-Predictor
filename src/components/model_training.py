@@ -29,7 +29,6 @@ class ModelTrainer:
         return model
 
     def calculate_financial_metrics(self, predictions, actual_prices):
-        # predictions and actual_prices are aligned
         pred_returns = np.diff(predictions.flatten()) / actual_prices[:-1]
         actual_returns = np.diff(np.log(actual_prices))
 
@@ -54,18 +53,10 @@ class ModelTrainer:
             model = self.build_model(input_shape=(X_train.shape[1], X_train.shape[2]))
 
             logging.info("Training model.")
-            print("X_train shape:", X_train.shape)
-            print("y_train shape:", y_train.shape)
-            print("Total samples:", X_train.shape[0])
-            print("y_train std:", np.std(y_train))
-            print("Any NaNs in X_train:", np.isnan(X_train).any())
-            print("Any NaNs in y_train:", np.isnan(y_train).any())
-            print("X_train min/max:", X_train.min(), X_train.max())
             model.fit(
                 X_train, y_train,
                 epochs=self.config.epochs,
-                batch_size=self.config.batch_size,
-                verbose=1
+                batch_size=self.config.batch_size
             )
 
             logging.info("Generating predictions and evaluations.")
@@ -73,7 +64,6 @@ class ModelTrainer:
             predictions_actual = y_scaler.inverse_transform(predictions_scaled)
             y_test_actual = y_scaler.inverse_transform(y_test.reshape(-1, 1))
 
-            # Standard regression metrics
             mse = np.mean((predictions_actual - y_test_actual) ** 2)
             rmse = np.sqrt(mse)
             mae = np.mean(np.abs(predictions_actual - y_test_actual))
@@ -86,7 +76,6 @@ class ModelTrainer:
                 "R2": float(r2)
             }
 
-            # Financial metrics
             financial_metrics = self.calculate_financial_metrics(predictions_actual, test_prices_aligned)
 
             all_metrics = {**regression_metrics, **financial_metrics}

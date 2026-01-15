@@ -11,16 +11,13 @@ class TrainingPipeline:
         logging.info("Initiating the training pipeline.")
 
         try:
-            # 1️⃣ Data ingestion
             data_ingestion = DataIngestion()
             raw_path = data_ingestion.initiate_data_ingestion()
 
-            # 2️⃣ Data transformation
             data_transformation = DataTransformation()
             X_train, y_train, X_test, y_test, _, y_scaler_path, test_prices_aligned = \
                 data_transformation.initiate_data_transformation(raw_array_path=raw_path)
 
-            # 3️⃣ Model training
             model_trainer = ModelTrainer()
             model, predictions_actual, metrics = model_trainer.initiate_model_training(
                 X_train=X_train,
